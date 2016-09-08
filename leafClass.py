@@ -5,11 +5,11 @@ Created on Thu Sep  8 09:03:09 2016
 @author: sanjeev
 """
 import pandas as pd
-from process_data import encode
+from process_data import encode_data
 train=pd.read_csv('./train.csv')
 test=pd.read_csv('./test.csv')
 
-train_data, labels, test_data, test_ids, classes = encode(train, test)
+train_data, labels, pred_data, pred_ids, classes = encode_data(train, test)
 
 #print train_data.head(1)
 #print labels
@@ -22,9 +22,9 @@ from sklearn.cross_validation import StratifiedShuffleSplit
 #from sklearn.cross_validation import train_test_split
 
 ## for stratified division of train data
-sss = StratifiedShuffleSplit(labels, 10, test_size=0.2, random_state=23)
+splitted_data = StratifiedShuffleSplit(labels, 10, test_size=0.2, random_state=23)
 
-for train_index, test_index in sss:
+for train_index, test_index in splitted_data:
     X_train, X_test = train_data.values[train_index], train_data.values[test_index]
     y_train, y_test = labels[train_index], labels[test_index]
 
@@ -38,9 +38,11 @@ print len(X_test),len(X_train),len(train_data)
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+
 clf1=SVC(kernel="rbf", C=0.025, probability=True)
 #clf2=DecisionTreeClassifier()
 clf2=LinearDiscriminantAnalysis()
+
 clf1.fit(X_train,y_train)
 clf2.fit(X_train,y_train)
 
@@ -56,13 +58,13 @@ ll = log_loss(y_test, pred_prob2)
 print "SVM accracy :"+str(accu1)
 print "Decision Tree Classifier :"+str(accu2)
 print "Log Loss for econd classifier :"+str(ll)
-pred_test_data=clf2.predict_proba(test_data)
+pred_test_data=clf2.predict_proba(pred_data)
 
 print pred_test_data
 
 
 submission = pd.DataFrame(pred_test_data, columns=classes)
-submission.insert(0, 'id', test_ids)
+submission.insert(0, 'id', pred_ids)
 #submission.reset_index()
 
 submission.to_csv("submission.csv",index=False)
