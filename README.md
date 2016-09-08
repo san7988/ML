@@ -1,2 +1,2 @@
 # ML
-My ML repo
+My ML repo : Contains various small project from kaggle, coursera etc
