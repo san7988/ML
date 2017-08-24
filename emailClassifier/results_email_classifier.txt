@@ -1,4 +1,4 @@
-Multinomial Naive bayes : 500 mails each
+Multinomial Naive bayes : 500 mails each : 2 classes
 Total emails classified: 3500
 Score: 0.943388423941
 Confusion matrix:
@@ -6,7 +6,7 @@ Confusion matrix:
  [ 154 1346]]
 
 -------------------------------------
-Multinomial Naive bayes
+Multinomial Naive bayes : 2 classes
 Total emails classified: 46440
 Score: 0.957980454489
 Confusion matrix:
@@ -26,3 +26,10 @@ Score: 0.990943483622
 Confusion matrix:
 [[13352   101]
  [  493 32494]]
+ -------------------------------------
+Random Forest : with tf-idf
+Total emails classified: 52075
+Score: 0.988320798385
+Confusion matrix:
+[[18973   115]
+ [  649 32338]]
